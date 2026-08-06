@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  Plus, 
-  ArrowUpRight, 
-  Copy, 
-  Trash2, 
-  Eye, 
-  Check, 
+import {
+  Plus,
+  ArrowUpRight,
+  Copy,
+  Trash2,
+  Eye,
+  Check,
   Globe,
   Edit2
 } from 'lucide-react';
@@ -46,17 +46,17 @@ export function LinktreeDashboard({ pages, onEdit, onDelete, onCreateNew }: Link
     <div>
       <div className={styles.dashGrid}>
         {/* Dashed Create New Page Card */}
-        <div 
-          onClick={onCreateNew} 
-          className={styles.dashCard} 
-          style={{ 
-            border: '2px dashed #cbd5e1', 
-            background: 'transparent', 
-            display: 'flex', 
+        <div
+          onClick={onCreateNew}
+          className={styles.dashCard}
+          style={{
+            border: '2px dashed #cbd5e1',
+            background: 'transparent',
+            display: 'flex',
             flexDirection: 'column',
-            alignItems: 'center', 
-            justifyContent: 'center', 
-            minHeight: '120px', 
+            alignItems: 'center',
+            justifyContent: 'center',
+            minHeight: '120px',
             cursor: 'pointer',
             boxShadow: 'none'
           }}
@@ -70,9 +70,9 @@ export function LinktreeDashboard({ pages, onEdit, onDelete, onCreateNew }: Link
             <div className={styles.dashCardHeader}>
               <div className={styles.dashCardAvatar}>
                 {page.avatarUrl ? (
-                  <img 
-                    src={page.avatarUrl} 
-                    alt={page.displayName || 'Profile Avatar'} 
+                  <img
+                    src={page.avatarUrl}
+                    alt={page.displayName || 'Profile Avatar'}
                     style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                   />
                 ) : page.displayName ? (
@@ -98,12 +98,12 @@ export function LinktreeDashboard({ pages, onEdit, onDelete, onCreateNew }: Link
                 <span><strong>0</strong> Clicks</span>
               </div>
             </div>
-
+            {/* comment */}
             <div className={styles.dashCardFooter}>
-              <a 
-                href={`/u/${page.slug}`} 
-                target="_blank" 
-                rel="noreferrer" 
+              <a
+                href={`/u/${page.slug}`}
+                target="_blank"
+                rel="noreferrer"
                 className={styles.viewLiveBtn}
               >
                 <span>View Live</span>
@@ -111,24 +111,24 @@ export function LinktreeDashboard({ pages, onEdit, onDelete, onCreateNew }: Link
               </a>
 
               <div className={styles.dashCardActions}>
-                <button 
-                  onClick={() => onEdit(page)} 
+                <button
+                  onClick={() => onEdit(page)}
                   className={styles.actionBtn}
                   title="Edit page profile details"
                 >
                   <Edit2 size={13} />
                 </button>
 
-                <button 
-                  onClick={() => handleCopyLink(page)} 
+                <button
+                  onClick={() => handleCopyLink(page)}
                   className={styles.actionBtn}
                   title="Copy link to clipboard"
                 >
                   {copiedId === page.id ? <Check size={13} style={{ color: 'green' }} /> : <Copy size={13} />}
                 </button>
-                
-                <button 
-                  onClick={() => onDelete(page.id)} 
+
+                <button
+                  onClick={() => onDelete(page.id)}
                   className={`${styles.actionBtn} ${styles.actionBtnDanger}`}
                   title="Delete profile page"
                 >
