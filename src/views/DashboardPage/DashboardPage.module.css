@@ -1,0 +1,850 @@
+.container {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+  background-color: #E6E6E6;
+}
+
+[data-theme='dark'] .container {
+  background-color: hsl(var(--color-neutral-50));
+}
+
+/* Editor view: full viewport, no sidebar */
+.editorContainer {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+  background-color: hsl(var(--color-neutral-50));
+}
+
+.blurredBackground {
+  filter: blur(8px);
+  pointer-events: none;
+  transition: filter var(--transition-normal);
+}
+
+.mainWrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* ── Back button in editor topbar ─────────────────────────── */
+.backBtn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: var(--radius-full);
+  border: 1.5px solid hsl(var(--color-neutral-200));
+  background: white;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  color: hsl(var(--color-neutral-600));
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+}
+
+.backBtn:hover {
+  border-color: hsl(var(--color-primary));
+  color: hsl(var(--color-primary));
+  background-color: hsl(var(--color-primary-light));
+}
+
+.breadcrumbDivider {
+  color: hsl(var(--color-neutral-400));
+  font-size: 16px;
+  user-select: none;
+}
+
+.topbar {
+  height: var(--topbar-height);
+  background-color: white;
+  border-bottom: 1px solid hsl(var(--color-neutral-200));
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+  flex-shrink: 0;
+  z-index: 50;
+}
+
+.mobileMenuBtn {
+  display: none;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.topbarActions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* ── Resume name inline edit ─────────────────────────────────────── */
+.resumeNameWrap {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  border: 1.5px solid transparent;
+  transition: border-color var(--transition-fast), background var(--transition-fast);
+  cursor: text;
+}
+
+.resumeNameWrap:hover {
+  border-color: hsl(var(--color-neutral-300));
+  background-color: hsl(var(--color-neutral-50));
+}
+
+.resumeNameEditing {
+  border-color: hsl(var(--color-primary)) !important;
+  background-color: hsl(var(--color-primary-light)) !important;
+  box-shadow: 0 0 0 3px rgba(85, 85, 247, 0.12);
+}
+
+.resumeNameLabel {
+  font-weight: 700;
+  font-size: 15px;
+  color: hsl(var(--color-neutral-900));
+  cursor: pointer;
+  user-select: none;
+}
+
+.resumeNameInput {
+  font-weight: 700;
+  font-size: 15px;
+  color: hsl(var(--color-neutral-900));
+  border: none;
+  outline: none;
+  background: transparent;
+  min-width: 80px;
+  max-width: 200px;
+  width: auto;
+}
+
+/* ── Save button with animated status ───────────────────────────── */
+.saveBtn {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 18px;
+  border-radius: var(--radius-full);
+  border: none;
+  background: linear-gradient(135deg, hsl(var(--color-primary)) 0%, hsl(var(--color-primary-dark)) 100%);
+  color: white;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity var(--transition-fast), transform var(--transition-fast);
+  box-shadow: 0 2px 8px rgba(85, 85, 247, 0.35);
+  white-space: nowrap;
+}
+
+.saveBtn:hover:not(:disabled) {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.saveBtn:disabled {
+  cursor: default;
+  opacity: 0.8;
+}
+
+.saveBtnSaving {
+  background: linear-gradient(135deg, hsl(230, 70%, 55%) 0%, hsl(240, 70%, 45%) 100%);
+}
+
+.saveBtnSaved {
+  background: linear-gradient(135deg, hsl(145, 65%, 42%) 0%, hsl(145, 65%, 35%) 100%);
+  box-shadow: 0 2px 8px rgba(34, 197, 94, 0.35);
+}
+
+/* Secondary variant: outlined/ghost style for lower-priority actions */
+.saveBtnSecondary {
+  background: transparent;
+  border: 1.5px solid hsl(var(--color-neutral-300));
+  color: hsl(var(--color-neutral-700));
+  box-shadow: none;
+}
+
+.saveBtnSecondary:hover:not(:disabled) {
+  background: hsl(var(--color-neutral-100));
+  border-color: hsl(var(--color-neutral-400));
+  transform: translateY(-1px);
+  opacity: 1;
+}
+
+.saveBtnSecondary.saveBtnSaving {
+  background: hsl(230, 70%, 55%);
+  border-color: transparent;
+  color: white;
+}
+
+.saveBtnSecondary.saveBtnSaved {
+  background: hsl(145, 65%, 42%);
+  border-color: transparent;
+  color: white;
+  box-shadow: 0 2px 8px rgba(34, 197, 94, 0.35);
+}
+
+/* Spinning circle inside Save button while saving */
+.savingSpinner {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border: 2px solid rgba(255,255,255,0.35);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+
+.workspaceGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  flex: 1;
+  overflow: hidden;
+  height: calc(100vh - var(--topbar-height));
+}
+
+.editorPaneWrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border-right: 1px solid hsl(var(--color-neutral-200));
+  overflow: hidden;
+}
+
+.editorPanelHeader {
+  height: 48px;
+  background-color: white;
+  border-bottom: 1px solid hsl(var(--color-neutral-300));
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  flex-shrink: 0;
+}
+
+.editorTabs {
+  display: flex;
+  gap: 16px;
+}
+
+.editorTabBtn {
+  background: transparent;
+  border: none;
+  font-size: 13px;
+  font-weight: 500;
+  color: hsl(var(--color-neutral-400));
+  cursor: pointer;
+  padding: 14px 0;
+  position: relative;
+  transition: color var(--transition-fast);
+}
+
+.editorTabBtn:hover {
+  color: hsl(var(--color-neutral-800));
+}
+
+.editorTabActive {
+  color: hsl(var(--color-primary));
+  font-weight: 600;
+}
+
+.editorTabActive::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: hsl(var(--color-primary));
+}
+
+.editorPaneContent {
+  flex: 1;
+  overflow-y: auto;
+  height: 100%;
+  background-color: hsl(var(--color-neutral-50));
+  scrollbar-gutter: stable;
+}
+
+.previewPaneWrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  background-color: hsl(var(--color-neutral-200));
+}
+
+.previewPaneContent {
+  flex: 1;
+  overflow: hidden;
+  height: 100%;
+}
+
+/* Overview Dashboard */
+.overview {
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  overflow-y: auto;
+  height: 100%;
+}
+
+.welcomeCard {
+  background: linear-gradient(135deg, hsl(var(--color-primary-light)) 0%, hsl(var(--color-primary-light)) 100%);
+  border: 1px solid rgba(85, 85, 247, 0.1);
+  border-radius: var(--radius-md);
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.welcomeTitle {
+  font-size: 22px;
+  font-weight: 700;
+  color: hsl(var(--color-neutral-900));
+}
+
+.welcomeText {
+  font-size: 14px;
+  color: hsl(var(--color-neutral-600));
+  line-height: 1.5;
+  max-width: 500px;
+}
+
+.statsRow {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.statCard {
+  background-color: white;
+  border: 1px solid hsl(var(--color-neutral-200));
+  border-radius: var(--radius-md);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  box-shadow: var(--shadow-sm);
+}
+
+.statVal {
+  font-size: 24px;
+  font-weight: 700;
+  color: hsl(var(--color-primary));
+}
+
+.statLabel {
+  font-size: 12px;
+  font-weight: 500;
+  color: hsl(var(--color-neutral-400));
+}
+
+.quickActions {
+  background-color: white;
+  border: 1px solid hsl(var(--color-neutral-200));
+  border-radius: var(--radius-md);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-shadow: var(--shadow-sm);
+}
+
+.actionGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.actionBtn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid hsl(var(--color-neutral-200));
+  background-color: white;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  text-align: left;
+  transition: all var(--transition-fast);
+}
+
+.actionBtn:hover {
+  border-color: hsl(var(--color-primary));
+  background-color: hsl(var(--color-primary-light));
+  transform: translateY(-1px);
+}
+
+.actionIcon {
+  width: 20px;
+  height: 20px;
+  color: hsl(var(--color-primary));
+}
+
+.actionTextContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.actionTitle {
+  font-size: 14px;
+  font-weight: 600;
+  color: hsl(var(--color-neutral-900));
+}
+
+.actionDesc {
+  font-size: 11px;
+  color: hsl(var(--color-neutral-400));
+}
+
+.upgradeLink {
+  color: hsl(var(--color-primary));
+  text-decoration: underline;
+  cursor: pointer;
+  font-weight: 600;
+  transition: color var(--transition-fast);
+}
+
+.upgradeLink:hover {
+  color: hsl(var(--color-primary-dark));
+}
+
+/* ── Dedicated Fixed List Page Header ── */
+.listPageHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 56px 12px 56px;
+  background-color: #E6E6E6;
+  flex-shrink: 0;
+  z-index: 10;
+  transition: all var(--transition-normal);
+  border-bottom: 1.5px solid rgba(0, 0, 0, 0.06);
+}
+
+.emptyOnboardingHeader {
+  display: none !important;
+  padding: 0 !important;
+}
+
+[data-theme='dark'] .listPageHeader {
+  background-color: hsl(var(--color-neutral-50));
+  border-bottom: 1.5px solid hsl(var(--color-neutral-200));
+}
+
+.listPageHeaderLeft {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.listPageTitleSection {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+}
+
+.listPageTitle {
+  font-size: 20px;
+  font-weight: 700;
+  color: hsl(var(--color-neutral-900));
+  margin: 0;
+  line-height: 1.2;
+}
+
+.listPageSubheading {
+  font-size: 13px;
+  color: hsl(var(--color-neutral-600));
+  margin: 0;
+  line-height: 1.2;
+  font-weight: 400;
+}
+
+/* Mobile Toggle Preview bar */
+.mobilePreviewBar {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background-color: white;
+  border-top: 1px solid hsl(var(--color-neutral-200));
+  z-index: 100;
+  padding: 8px 16px;
+}
+
+.mobileToggleBtn {
+  width: 100%;
+  height: 100%;
+  background-color: hsl(var(--color-neutral-900));
+  color: white;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+/* ── Responsive ─────────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .workspaceGrid {
+    grid-template-columns: 1fr;
+  }
+  .previewPaneWrapper {
+    display: none;
+  }
+  .previewPaneVisible {
+    display: flex;
+    position: fixed;
+    top: var(--topbar-height);
+    bottom: 60px;
+    left: 0;
+    right: 0;
+    z-index: 90;
+    background-color: hsl(var(--color-neutral-200));
+  }
+  .mobilePreviewBar {
+    display: block;
+  }
+  .editorPaneWrapper {
+    border-right: none;
+    padding-bottom: 80px;
+  }
+}
+
+@media (max-width: 768px) {
+  .topbar {
+    padding: 0 16px;
+  }
+  .mobileMenuBtn {
+    display: block;
+  }
+  .listPageHeader {
+    padding: 16px 24px 0 24px;
+  }
+  .listPageTitle {
+    font-size: 18px;
+  }
+  .listPageSubheading {
+    font-size: 11px;
+  }
+  .emptyOnboardingHeader {
+    display: flex !important;
+    padding: 16px 24px 0 24px !important;
+  }
+}
+
+/* ── Dark mode overrides ─────────────────── */
+[data-theme='dark'] .topbar {
+  background-color: hsl(var(--color-neutral-100));
+  border-bottom: 1px solid hsl(var(--color-neutral-300));
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+[data-theme='dark'] .editorTabBtn {
+  color: hsl(var(--color-neutral-600));
+}
+
+[data-theme='dark'] .editorTabBtn:hover {
+  color: hsl(var(--color-neutral-800));
+}
+
+[data-theme='dark'] .backBtn {
+  background-color: hsl(var(--color-neutral-100));
+  border-color: hsl(var(--color-neutral-200));
+  color: hsl(var(--color-neutral-800));
+}
+
+[data-theme='dark'] .backBtn:hover {
+  background-color: hsl(var(--color-neutral-200));
+  border-color: hsl(var(--color-primary));
+  color: hsl(var(--color-primary));
+}
+
+[data-theme='dark'] .editorPanelHeader {
+  background-color: hsl(var(--color-neutral-100));
+  border-bottom-color: hsl(var(--color-neutral-200));
+}
+
+[data-theme='dark'] .statCard {
+  background-color: hsl(var(--color-neutral-100));
+  border-color: hsl(var(--color-neutral-200));
+}
+
+[data-theme='dark'] .quickActions {
+  background-color: hsl(var(--color-neutral-100));
+  border-color: hsl(var(--color-neutral-200));
+}
+
+[data-theme='dark'] .actionBtn {
+  background-color: hsl(var(--color-neutral-100));
+  border-color: hsl(var(--color-neutral-200));
+}
+
+[data-theme='dark'] .actionTitle {
+  color: hsl(var(--color-neutral-900));
+}
+
+[data-theme='dark'] .actionDesc {
+  color: hsl(var(--color-neutral-400));
+}
+
+[data-theme='dark'] .mobilePreviewBar {
+  background-color: hsl(var(--color-neutral-100));
+  border-top-color: hsl(var(--color-neutral-200));
+}
+
+.importBtn {
+  display: flex;
+  align-items: center;
+  padding: 8px 16px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid hsl(var(--color-neutral-300));
+  background: white;
+  font-size: 13px;
+  font-weight: 600;
+  color: hsl(var(--color-neutral-700));
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+}
+
+.importBtn:hover {
+  border-color: hsl(var(--color-primary));
+  color: hsl(var(--color-primary));
+  background: hsl(var(--color-primary-light));
+}
+
+[data-theme='dark'] .importBtn {
+  background: hsl(var(--color-neutral-100));
+  border-color: hsl(var(--color-neutral-300));
+  color: hsl(var(--color-neutral-800));
+}
+
+[data-theme='dark'] .importBtn:hover {
+  border-color: hsl(var(--color-primary));
+  color: hsl(var(--color-primary));
+  background: hsl(var(--color-primary-light));
+}
+
+/* ── Drag overlay ── */
+.dragOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(85, 85, 247, 0.08);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.dragOverlayCard {
+  background: white;
+  padding: 32px 48px;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(85, 85, 247, 0.15);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+}
+
+.dragOverlayIcon {
+  font-size: 40px;
+  animation: bounce 1s infinite alternate;
+}
+
+.dragOverlayTitle {
+  font-size: 20px;
+  font-weight: 700;
+  color: hsl(var(--color-neutral-900));
+}
+
+.dragOverlayText {
+  font-size: 13.5px;
+  color: hsl(var(--color-neutral-600));
+}
+
+/* ── AI Parsing overlay ── */
+.parseOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(10, 10, 14, 0.65);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.25s ease-out;
+}
+
+.parseCard {
+  background: white;
+  width: 100%;
+  max-width: 420px;
+  padding: 36px;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-xl);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+}
+
+.parsePulse {
+  position: relative;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: hsl(var(--color-primary-light));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
+.parsePulseInner {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid hsl(var(--color-primary));
+  animation: pulseScale 1.5s infinite ease-out;
+}
+
+.parseTitle {
+  font-size: 18px;
+  font-weight: 700;
+  color: hsl(var(--color-neutral-900));
+}
+
+.parseStep {
+  font-size: 13px;
+  color: hsl(var(--color-neutral-600));
+  min-height: 20px;
+}
+
+.progressBar {
+  width: 100%;
+  height: 6px;
+  border-radius: var(--radius-full);
+  background: hsl(var(--color-neutral-200));
+  overflow: hidden;
+}
+
+.progressBarFill {
+  height: 100%;
+  background: linear-gradient(90deg, hsl(var(--color-primary)) 0%, hsl(var(--color-primary-dark)) 100%);
+  border-radius: var(--radius-full);
+  transition: width 0.3s ease-out;
+}
+
+/* Dark mode overrides for overlays */
+[data-theme='dark'] .dragOverlayCard,
+[data-theme='dark'] .parseCard {
+  background: hsl(var(--color-neutral-100));
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+[data-theme='dark'] .progressBar {
+  background: hsl(var(--color-neutral-200));
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes bounce {
+  from { transform: translateY(0); }
+  to { transform: translateY(-8px); }
+}
+
+@keyframes pulseScale {
+  0% { transform: scale(1); opacity: 0.8; }
+  100% { transform: scale(1.4); opacity: 0; }
+}
+
+/* ── Sticky Filter Tabs inside Header ── */
+.stickyFilterTabs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-top: 14px;
+}
+
+.stickyFilterTab {
+  padding: 7px 16px;
+  border-radius: var(--radius-full);
+  border: 1.5px solid hsl(var(--color-neutral-300));
+  background: white;
+  font-size: 13px;
+  font-weight: 500;
+  color: hsl(var(--color-neutral-600));
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.stickyFilterTab:hover {
+  border-color: hsl(var(--color-neutral-400));
+  color: hsl(var(--color-neutral-800));
+}
+
+.stickyFilterTabActive {
+  background: hsl(var(--color-primary));
+  border-color: hsl(var(--color-primary));
+  color: white;
+  font-weight: 600;
+}
+
+.stickyFilterTabActive:hover {
+  border-color: hsl(var(--color-primary-dark));
+  background: hsl(var(--color-primary-dark));
+  color: white;
+}
+
+[data-theme='dark'] .stickyFilterTab {
+  background: hsl(var(--color-neutral-100));
+  border-color: hsl(var(--color-neutral-300));
+  color: hsl(var(--color-neutral-600));
+}
+
+[data-theme='dark'] .stickyFilterTab:hover {
+  border-color: hsl(var(--color-neutral-400));
+  color: hsl(var(--color-neutral-800));
+}
+
+[data-theme='dark'] .stickyFilterTabActive {
+  background: hsl(var(--color-primary));
+  border-color: hsl(var(--color-primary));
+  color: white;
+}

@@ -1,0 +1,58 @@
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.fullWidth {
+  grid-column: span 2;
+}
+
+.label {
+  font-size: 13px;
+  font-weight: 500;
+  color: hsl(var(--color-neutral-600));
+}
+
+.input {
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid hsl(var(--color-neutral-200));
+  font-size: 14px;
+  background-color: white;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  width: 100%;
+}
+
+.input:focus {
+  outline: none;
+  border-color: hsl(var(--color-primary));
+  box-shadow: 0 0 0 3px rgba(85, 85, 247, 0.15);
+}
+
+.inputError {
+  border-color: hsl(var(--color-danger)) !important;
+}
+
+.errorText {
+  font-size: 11px;
+  color: hsl(var(--color-danger));
+  margin-top: 2px;
+}
+
+.helperText {
+  font-size: 11px;
+  color: hsl(var(--color-neutral-400));
+  margin-top: 2px;
+}
+
+/* Dark mode overrides */
+[data-theme='dark'] .input {
+  background-color: hsl(var(--color-neutral-100));
+  color: hsl(var(--color-neutral-900));
+  border-color: hsl(var(--color-neutral-200));
+}
+
+[data-theme='dark'] .input:focus {
+  border-color: hsl(var(--color-primary));
+}

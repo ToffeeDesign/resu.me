@@ -1,0 +1,465 @@
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(8px);
+  z-index: 1100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: modalFadeIn var(--transition-fast) ease-out;
+}
+
+.modalCard {
+  background-color: white;
+  border-radius: var(--radius-lg);
+  width: 90%;
+  max-width: 580px;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  border: 1px solid hsl(var(--color-neutral-200));
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  max-height: 90vh;
+}
+
+.modalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid hsl(var(--color-neutral-100));
+}
+
+.modalTitle {
+  font-size: 18px;
+  font-weight: 700;
+  color: hsl(var(--color-neutral-900));
+}
+
+.closeBtn {
+  background: transparent;
+  border: none;
+  color: hsl(var(--color-neutral-400));
+  cursor: pointer;
+  padding: 4px;
+  border-radius: var(--radius-xs);
+  transition: all var(--transition-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.closeBtn:hover {
+  background-color: hsl(var(--color-neutral-100));
+  color: hsl(var(--color-neutral-700));
+}
+
+.tabContainer {
+  display: flex;
+  border-bottom: 1px solid hsl(var(--color-neutral-100));
+  background-color: hsl(var(--color-neutral-50));
+}
+
+.tabBtn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px;
+  font-size: 13px;
+  font-weight: 600;
+  border: none;
+  background: transparent;
+  color: hsl(var(--color-neutral-500));
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  border-bottom: 2px solid transparent;
+}
+
+.tabBtn:hover {
+  color: hsl(var(--color-primary));
+  background-color: rgba(85, 85, 247, 0.03);
+}
+
+.tabActive {
+  color: hsl(var(--color-primary));
+  border-bottom-color: hsl(var(--color-primary));
+  background-color: white;
+}
+
+.guidanceBanner {
+  background-color: rgba(85, 85, 247, 0.05);
+  border-left: 4px solid hsl(var(--color-primary));
+  padding: 12px 18px;
+  font-size: 12px;
+  color: hsl(var(--color-neutral-700));
+  line-height: 1.5;
+}
+
+.modalContent {
+  padding: 24px;
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.uploadTabContent {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.dropzone {
+  border: 2px dashed hsl(var(--color-neutral-300));
+  border-radius: var(--radius-md);
+  padding: 32px 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  background-color: hsl(var(--color-neutral-50));
+}
+
+.dropzone:hover {
+  border-color: hsl(var(--color-primary));
+  background-color: rgba(85, 85, 247, 0.02);
+}
+
+.uploadIcon {
+  color: hsl(var(--color-neutral-400));
+  margin-bottom: 12px;
+}
+
+.uploadText {
+  font-size: 14px;
+  color: hsl(var(--color-neutral-700));
+  margin-bottom: 4px;
+}
+
+.uploadSubtext {
+  font-size: 12px;
+  color: hsl(var(--color-neutral-400));
+}
+
+.editorArea {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.cropViewport {
+  position: relative;
+  width: 100%;
+  height: 240px;
+  background-color: #eee;
+  background-image: 
+    linear-gradient(45deg, #ccc 25%, transparent 25%, transparent 75%, #ccc 75%, #ccc),
+    linear-gradient(45deg, #ccc 25%, transparent 25%, transparent 75%, #ccc 75%, #ccc);
+  background-size: 20px 20px;
+  background-position: 0 0, 10px 10px;
+  overflow: hidden;
+  cursor: grab;
+  border-radius: var(--radius-md);
+  border: 1px solid hsl(var(--color-neutral-300));
+  user-select: none;
+}
+
+.cropViewport:active {
+  cursor: grabbing;
+}
+
+.draggableImg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform-origin: center center;
+  pointer-events: none;
+  max-width: none;
+}
+
+.cropBoxHighlight {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 300px;
+  height: 100px;
+  transform: translate(-50%, -50%);
+  border: 2px solid white;
+  box-shadow: 0 0 0 9999px rgba(15, 23, 42, 0.6);
+  pointer-events: none;
+  border-radius: var(--radius-xs);
+}
+
+.zoomControls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 8px;
+}
+
+.zoomBtn {
+  background: transparent;
+  border: none;
+  color: hsl(var(--color-neutral-600));
+  font-size: 14px;
+  cursor: pointer;
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background-color var(--transition-fast);
+}
+
+.zoomBtn:hover {
+  background-color: hsl(var(--color-neutral-100));
+}
+
+.zoomSlider {
+  flex: 1;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  border-radius: var(--radius-full);
+  background: hsl(var(--color-neutral-200));
+  outline: none;
+}
+
+.zoomSlider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: hsl(var(--color-primary));
+  cursor: pointer;
+  transition: transform var(--transition-fast);
+  border: 2px solid white;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+}
+
+.zoomSlider::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+}
+
+.changeActionRow {
+  display: flex;
+  justify-content: center;
+}
+
+.changeBtn {
+  font-size: 12px;
+  font-weight: 600;
+  color: hsl(var(--color-primary));
+  background: transparent;
+  border: 1px solid hsl(var(--color-primary-light));
+  padding: 6px 14px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.changeBtn:hover {
+  background-color: hsl(var(--color-primary-light));
+}
+
+/* Drawing tab styling */
+.drawTabContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+}
+
+.canvasContainer {
+  position: relative;
+  width: 300px;
+  height: 100px;
+  border: 2px dashed hsl(var(--color-neutral-300));
+  background-color: hsl(var(--color-neutral-50));
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.drawCanvas {
+  display: block;
+  cursor: crosshair;
+  background: transparent;
+}
+
+.canvasGuideText {
+  position: absolute;
+  bottom: 8px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 10px;
+  color: hsl(var(--color-neutral-400));
+  pointer-events: none;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.resetCanvasBtn {
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 600;
+  color: hsl(var(--color-neutral-600));
+  background: transparent;
+  border: 1px solid hsl(var(--color-neutral-200));
+  padding: 6px 14px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.resetCanvasBtn:hover {
+  background-color: hsl(var(--color-neutral-100));
+  color: hsl(var(--color-neutral-900));
+}
+
+.errorMessage {
+  font-size: 12px;
+  color: hsl(var(--color-danger));
+  text-align: center;
+}
+
+.modalFooter {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 20px 24px;
+  border-top: 1px solid hsl(var(--color-neutral-100));
+  background-color: hsl(var(--color-neutral-50));
+}
+
+.cancelBtn {
+  font-size: 14px;
+  font-weight: 600;
+  color: hsl(var(--color-neutral-600));
+  background: transparent;
+  border: 1px solid hsl(var(--color-neutral-200));
+  padding: 8px 18px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.cancelBtn:hover {
+  background-color: hsl(var(--color-neutral-100));
+  color: hsl(var(--color-neutral-900));
+}
+
+.saveBtn {
+  font-size: 14px;
+  font-weight: 600;
+  color: white;
+  background-color: hsl(var(--color-primary));
+  border: none;
+  padding: 8px 24px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.saveBtn:hover {
+  background-color: hsl(var(--color-primary-dark));
+}
+
+.saveBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Dark theme extensions */
+[data-theme='dark'] .modalCard {
+  background-color: hsl(var(--color-neutral-900));
+  border-color: hsl(var(--color-neutral-800));
+}
+
+[data-theme='dark'] .modalHeader {
+  border-bottom-color: hsl(var(--color-neutral-800));
+}
+
+[data-theme='dark'] .modalTitle {
+  color: hsl(var(--color-neutral-100));
+}
+
+[data-theme='dark'] .tabContainer {
+  background-color: hsl(var(--color-neutral-50));
+  border-bottom-color: hsl(var(--color-neutral-800));
+}
+
+[data-theme='dark'] .tabActive {
+  background-color: hsl(var(--color-neutral-900));
+  color: hsl(var(--color-primary-light));
+}
+
+[data-theme='dark'] .guidanceBanner {
+  background-color: rgba(85, 85, 247, 0.1);
+  color: hsl(var(--color-neutral-300));
+}
+
+[data-theme='dark'] .dropzone {
+  border-color: hsl(var(--color-neutral-800));
+  background-color: hsl(var(--color-neutral-100));
+}
+
+[data-theme='dark'] .uploadText {
+  color: hsl(var(--color-neutral-200));
+}
+
+[data-theme='dark'] .canvasContainer {
+  border-color: hsl(var(--color-neutral-800));
+  background-color: hsl(var(--color-neutral-100));
+}
+
+[data-theme='dark'] .drawCanvas {
+  filter: invert(1) hue-rotate(180deg); /* Make drawn signature show up as white ink on dark screen */
+}
+
+[data-theme='dark'] .resetCanvasBtn {
+  border-color: hsl(var(--color-neutral-800));
+  color: hsl(var(--color-neutral-400));
+}
+
+[data-theme='dark'] .resetCanvasBtn:hover {
+  background-color: hsl(var(--color-neutral-800));
+  color: hsl(var(--color-neutral-100));
+}
+
+[data-theme='dark'] .modalFooter {
+  background-color: hsl(var(--color-neutral-50));
+  border-top-color: hsl(var(--color-neutral-800));
+}
+
+[data-theme='dark'] .cancelBtn {
+  border-color: hsl(var(--color-neutral-800));
+  color: hsl(var(--color-neutral-400));
+}
+
+[data-theme='dark'] .cancelBtn:hover {
+  background-color: hsl(var(--color-neutral-800));
+  color: hsl(var(--color-neutral-100));
+}

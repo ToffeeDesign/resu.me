@@ -1,0 +1,208 @@
+/* Outer clipping box — sized by parent card */
+.wrapper {
+  width: 215px;
+  height: 304px;
+  overflow: hidden;
+  position: relative;
+  pointer-events: none;
+  user-select: none;
+  background: white;
+  flex-shrink: 0;
+}
+
+/* Full-size A4 page, scaled down by JS-computed transform */
+.doc {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: white;
+  transform-origin: top left;
+  /* width / transform set via inline style */
+}
+
+/* ── Classic layout ──────────────────────────── */
+.header {
+  margin-bottom: var(--th-section-gap);
+}
+
+.name {
+  font-size: var(--th-title);
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  line-height: 1.1;
+}
+
+.jobTitle {
+  font-size: calc(var(--th-base) + 1px);
+  font-weight: 600;
+  margin-top: 3px;
+}
+
+.contacts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 14px;
+  margin-top: 6px;
+  font-size: calc(var(--th-base) - 1px);
+  color: #555;
+}
+
+.gccRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 14px;
+  font-size: calc(var(--th-base) - 2px);
+  color: #555;
+  margin-top: 4px;
+}
+
+.profilePhoto {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.section {
+  margin-bottom: var(--th-section-gap);
+}
+
+.sectionTitle {
+  font-size: var(--th-section-title);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 1.5px solid var(--th-primary);
+  padding-bottom: 3px;
+  margin-bottom: 8px;
+}
+
+.summaryText {
+  font-size: var(--th-base);
+  line-height: 1.5;
+  color: #333;
+}
+
+.itemBlock {
+  margin-bottom: 10px;
+}
+
+.itemRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.company {
+  font-weight: 600;
+  font-size: var(--th-base);
+}
+
+.dateText {
+  font-size: calc(var(--th-base) - 2px);
+  color: #888;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.role {
+  font-size: calc(var(--th-base) - 1px);
+  font-weight: 500;
+  margin-top: 2px;
+}
+
+.desc {
+  font-size: calc(var(--th-base) - 2px);
+  color: #555;
+  margin-top: 4px;
+  line-height: 1.4;
+}
+
+.skillsWrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.skill {
+  font-size: calc(var(--th-base) - 2px);
+  background: #f3f4f6;
+  padding: 2px 8px;
+  border-radius: 999px;
+  color: #374151;
+}
+
+.langsWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.langRow {
+  display: flex;
+  justify-content: space-between;
+  font-size: calc(var(--th-base) - 2px);
+}
+
+/* ── Sidebar layout ──────────────────────────── */
+.sidebarGrid {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  height: 100%;
+}
+
+.sidebarCol {
+  padding: var(--th-margin);
+  overflow: hidden;
+}
+
+.sidebarName {
+  font-size: calc(var(--th-title) - 4px);
+  font-weight: 700;
+  color: white;
+  margin-bottom: 4px;
+}
+
+.sidebarJobTitle {
+  font-size: var(--th-base);
+  color: #e5e7eb;
+  margin-bottom: 16px;
+}
+
+.sidebarContacts {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: calc(var(--th-base) - 1px);
+  color: #e5e7eb;
+  margin-bottom: 20px;
+}
+
+.sidebarSectionTitle {
+  font-size: var(--th-section-title);
+  font-weight: 700;
+  text-transform: uppercase;
+  color: white;
+  border-bottom: 1px solid rgba(255,255,255,0.25);
+  padding-bottom: 3px;
+  margin-bottom: 8px;
+}
+
+/* ── Blank state ─────────────────────────── */
+.blankState {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+}
+
+.blankLabel {
+  font-size: 28px;
+  color: #e5e7eb;
+  font-family: var(--font-system);
+  font-weight: 500;
+}

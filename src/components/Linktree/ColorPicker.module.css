@@ -1,0 +1,293 @@
+.pickerContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid hsl(var(--color-neutral-200));
+  border-radius: 16px;
+  background-color: white;
+  box-shadow: var(--shadow-sm);
+}
+
+[data-theme='dark'] .pickerContainer {
+  background-color: hsl(var(--color-neutral-100));
+  border-color: hsl(var(--color-neutral-200));
+}
+
+/* Draggable HSB Canvas */
+.canvasContainer {
+  position: relative;
+  width: 100%;
+  height: 150px;
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: crosshair;
+  user-select: none;
+}
+
+.canvasWhite {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right, #ffffff, transparent);
+}
+
+.canvasBlack {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to top, #000000, transparent);
+}
+
+.canvasHandle {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid white;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.4);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  transition: transform 0.1s ease;
+}
+
+/* Sliders Row (Eyedropper + Hue/Alpha Column) */
+.slidersRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.eyedropperButton {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: 1px solid hsl(var(--color-neutral-200));
+  background-color: white;
+  color: hsl(var(--color-neutral-600));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all var(--transition-fast);
+}
+
+[data-theme='dark'] .eyedropperButton {
+  background-color: hsl(var(--color-neutral-200));
+  border-color: hsl(var(--color-neutral-300));
+  color: hsl(var(--color-neutral-800));
+}
+
+.eyedropperButton:hover {
+  background-color: hsl(var(--color-neutral-50));
+  color: hsl(var(--color-primary));
+  border-color: hsl(var(--color-primary));
+}
+
+[data-theme='dark'] .eyedropperButton:hover {
+  background-color: hsl(var(--color-neutral-200));
+}
+
+.slidersColumn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sliderWrapper {
+  position: relative;
+  height: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.hueTrack {
+  background: linear-gradient(
+    to right,
+    #ff0000 0%,
+    #ffff00 17%,
+    #00ff00 33%,
+    #00ffff 50%,
+    #0000ff 67%,
+    #ff00ff 83%,
+    #ff0000 100%
+  );
+}
+
+.alphaTrack {
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8"><rect width="4" height="4" fill="%23e5e7eb"/><rect x="4" y="4" width="4" height="4" fill="%23e5e7eb"/><rect x="4" width="4" height="4" fill="%23ffffff"/><rect y="4" width="4" height="4" fill="%23ffffff"/></svg>');
+}
+
+.sliderHandle {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  transform: translate(-50%, -50%);
+  top: 50%;
+  pointer-events: none;
+}
+
+/* Hex & Opacity Inputs Grid */
+.inputsRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.formatDropdown {
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid hsl(var(--color-neutral-200));
+  background-color: hsl(var(--color-neutral-50));
+  font-size: 12px;
+  font-weight: 700;
+  color: hsl(var(--color-neutral-600));
+  outline: none;
+  cursor: pointer;
+  transition: border-color var(--transition-fast);
+}
+
+[data-theme='dark'] .formatDropdown {
+  background-color: hsl(var(--color-neutral-200));
+  border-color: hsl(var(--color-neutral-300));
+  color: hsl(var(--color-neutral-800));
+}
+
+.formatDropdown:focus {
+  border-color: hsl(var(--color-primary));
+}
+
+.hexInput {
+  flex: 1;
+  min-width: 0;
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid hsl(var(--color-neutral-200));
+  background-color: white;
+  font-size: 13px;
+  color: hsl(var(--color-neutral-800));
+  outline: none;
+  font-family: monospace;
+  transition: all var(--transition-fast);
+}
+
+[data-theme='dark'] .hexInput {
+  background-color: hsl(var(--color-neutral-200));
+  border-color: hsl(var(--color-neutral-300));
+  color: white;
+}
+
+.hexInput:focus {
+  border-color: hsl(var(--color-primary));
+}
+
+.alphaInput {
+  width: 60px;
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid hsl(var(--color-neutral-200));
+  background-color: white;
+  font-size: 13px;
+  text-align: center;
+  color: hsl(var(--color-neutral-800));
+  outline: none;
+  transition: all var(--transition-fast);
+}
+
+[data-theme='dark'] .alphaInput {
+  background-color: hsl(var(--color-neutral-200));
+  border-color: hsl(var(--color-neutral-300));
+  color: white;
+}
+
+.alphaInput:focus {
+  border-color: hsl(var(--color-primary));
+}
+
+/* Saved Colors Palette */
+.savedSection {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border-top: 1px dashed hsl(var(--color-neutral-200));
+  padding-top: 12px;
+  margin-top: 4px;
+}
+
+[data-theme='dark'] .savedSection {
+  border-top-color: hsl(var(--color-neutral-300));
+}
+
+.savedHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.savedTitle {
+  font-size: 11px;
+  font-weight: 700;
+  color: hsl(var(--color-neutral-500));
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.addButton {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: hsl(var(--color-neutral-500));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  border-radius: 6px;
+  transition: all var(--transition-fast);
+}
+
+.addButton:hover {
+  background-color: hsl(var(--color-neutral-50));
+  color: hsl(var(--color-primary));
+}
+
+[data-theme='dark'] .addButton:hover {
+  background-color: hsl(var(--color-neutral-200));
+}
+
+.colorsGrid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 10px;
+}
+
+.colorCircle {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.colorCircle:hover {
+  transform: scale(1.1);
+}
+
+.colorCircleActive {
+  box-shadow: 0 0 0 2px white, 0 0 0 4px hsl(var(--color-primary));
+}
+
+[data-theme='dark'] .colorCircleActive {
+  box-shadow: 0 0 0 2px hsl(var(--color-neutral-100)), 0 0 0 4px hsl(var(--color-primary));
+}
