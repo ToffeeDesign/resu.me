@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  Sparkles, 
-  ArrowRight, 
+import {
+  Sparkles,
+  ArrowRight,
   ArrowLeft,
-  Layers, 
-  FileText, 
-  Globe, 
-  Mail 
+  Layers,
+  FileText,
+  Globe,
+  Mail
 } from 'lucide-react';
 import styles from './LinktreeManager.module.css';
 import { useResume, LinktreePage } from '@/context/ResumeContext';
@@ -25,11 +25,11 @@ const LinkedinIcon = (props: React.SVGProps<SVGSVGElement>) => (
     <circle cx="4" cy="4" r="2" />
   </svg>
 );
-
-export function LinktreeEmptyState({ 
+// comment
+export function LinktreeEmptyState({
   onCreatePage,
   onCancel
-}: { 
+}: {
   onCreatePage: (slug: string) => void;
   onCancel?: () => void;
 }) {
@@ -73,9 +73,9 @@ export function LinktreeEmptyState({
       {/* Left Section - Onboarding & Form Details */}
       <div className={styles.leftCol}>
         {onCancel ? (
-          <button 
-            type="button" 
-            onClick={onCancel} 
+          <button
+            type="button"
+            onClick={onCancel}
             className={styles.featureBadge}
             style={{ cursor: 'pointer', border: 'none', outline: 'none' }}
           >
@@ -101,16 +101,16 @@ export function LinktreeEmptyState({
         <form onSubmit={handleSubmit} className={styles.usernameCard}>
           <div className={styles.usernameInputRow}>
             <span className={styles.usernamePrefix}>{domain}</span>
-            <input 
-              type="text" 
+            <input
+              type="text"
               className={styles.usernameInput}
               placeholder="yourname"
               value={slug}
               onChange={(e) => setSlug(e.target.value.toLowerCase().replace(/[^a-z0-9_-]/g, ''))}
               required
             />
-            <button 
-              type="submit" 
+            <button
+              type="submit"
               className={styles.usernameCreateBtn}
               disabled={!slug.trim()}
             >
@@ -135,11 +135,11 @@ export function LinktreeEmptyState({
         <div className={styles.socialProofRow}>
           <div className={styles.avatarStack}>
             {avatars.map((url, i) => (
-              <img 
-                key={i} 
-                src={url} 
-                className={styles.avatarCircle} 
-                alt={`User avatar ${i + 1}`} 
+              <img
+                key={i}
+                src={url}
+                className={styles.avatarCircle}
+                alt={`User avatar ${i + 1}`}
               />
             ))}
           </div>
@@ -156,7 +156,7 @@ export function LinktreeEmptyState({
           <div className={styles.phoneAvatar}>✨</div>
           <h2 className={styles.phoneName}>{user?.name || 'Zoé Williams'}</h2>
           <p className={styles.phoneBio}>Product Designer & Developer. Building interactive web tools. Sharing my design journey.</p>
-          
+
           <div className={styles.phoneSocialRow}>
             <span className={styles.phoneSocialCircle}>🐦</span>
             <span className={styles.phoneSocialCircle}>📸</span>

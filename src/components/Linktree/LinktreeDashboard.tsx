@@ -98,7 +98,6 @@ export function LinktreeDashboard({ pages, onEdit, onDelete, onCreateNew }: Link
                 <span><strong>0</strong> Clicks</span>
               </div>
             </div>
-            {/* comment */}
             <div className={styles.dashCardFooter}>
               <a
                 href={`/u/${page.slug}`}
