@@ -25,7 +25,7 @@ const LinkedinIcon = (props: React.SVGProps<SVGSVGElement>) => (
     <circle cx="4" cy="4" r="2" />
   </svg>
 );
-// comment
+// comment learning-1
 export function LinktreeEmptyState({
   onCreatePage,
   onCancel

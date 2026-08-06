@@ -31,3 +31,4 @@
 ## Next Steps
 - Implement additional templates or customized fields as requested by the user.
 - Add further verification or export optimizations.
+- Use supabase for auth
